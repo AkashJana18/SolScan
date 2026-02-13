@@ -48,6 +48,8 @@ export default function App() {
   );
 }
 
+function Token() {}
+
 const s = StyleSheet.create({
   safe: {
     flex: 1,

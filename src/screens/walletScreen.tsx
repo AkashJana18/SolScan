@@ -92,6 +92,11 @@ export function WalletScreen() {
     setLoading(false);
   };
 
+  const tryExample = () => {
+    const example = "86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY";
+    setAddress(example);
+  };
+
   return (
     <ScrollView style={s.scroll}>
       {/* Header */}
@@ -123,6 +128,14 @@ export function WalletScreen() {
           ) : (
             <Text style={s.btnText}>Search</Text>
           )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={s.btnGhost}
+          onPress={tryExample}
+          activeOpacity={0.7}
+        >
+          <Text style={s.btnGhostText}>Demo</Text>
         </TouchableOpacity>
       </View>
 
