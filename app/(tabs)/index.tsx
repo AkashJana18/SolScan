@@ -65,7 +65,7 @@ const timeAgo = (ts: number) => {
   return `${Math.floor(s / 86400)}d ago`;
 };
 
-export function WalletScreen() {
+export default function WalletScreen() {
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState<number | null>(null);
