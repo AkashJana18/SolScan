@@ -98,119 +98,125 @@ export default function WalletScreen() {
   };
 
   return (
-    <ScrollView style={s.scroll}>
-      {/* Header */}
-      <Text style={s.title}>SolScan</Text>
-      <Text style={s.subtitle}>Explore any Solana wallet</Text>
+    <SafeAreaView style={s.safe}>
+      <ScrollView style={s.scroll}>
+        {/* Header */}
+        <Text style={s.title}>SolScan</Text>
+        <Text style={s.subtitle}>Explore any Solana wallet</Text>
 
-      {/* Search */}
-      <View style={s.inputContainer}>
-        <TextInput
-          style={s.input}
-          placeholder="Enter wallet address..."
-          placeholderTextColor="#6B7280"
-          value={address}
-          onChangeText={setAddress}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-      </View>
-
-      <View style={s.btnRow}>
-        <TouchableOpacity
-          style={[s.btn, loading && s.btnDisabled]}
-          onPress={search}
-          disabled={loading}
-          activeOpacity={0.8}
-        >
-          {loading ? (
-            <ActivityIndicator color="#000" />
-          ) : (
-            <Text style={s.btnText}>Search</Text>
-          )}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={s.btnGhost}
-          onPress={tryExample}
-          activeOpacity={0.7}
-        >
-          <Text style={s.btnGhostText}>Demo</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Balance Card */}
-      {balance !== null && (
-        <View style={s.card}>
-          <Text style={s.label}>SOL Balance</Text>
-          <View style={s.balanceRow}>
-            <Text style={s.balance}>{balance.toFixed(4)}</Text>
-            <Text style={s.sol}>SOL</Text>
-          </View>
-          <Text style={s.addr}>{short(address.trim(), 6)}</Text>
+        {/* Search */}
+        <View style={s.inputContainer}>
+          <TextInput
+            style={s.input}
+            placeholder="Enter wallet address..."
+            placeholderTextColor="#6B7280"
+            value={address}
+            onChangeText={setAddress}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
         </View>
-      )}
 
-      {/* Tokens */}
-      {tokens.length > 0 && (
-        <>
-          <Text style={s.section}>Tokens ({tokens.length})</Text>
-          <FlatList
-            data={tokens}
-            keyExtractor={(t) => t.mint}
-            scrollEnabled={false}
-            renderItem={({ item }) => (
-              <View style={s.row}>
-                <Text style={s.mint}>{short(item.mint, 6)}</Text>
-                <Text style={s.amount}>{item.amount}</Text>
-              </View>
+        <View style={s.btnRow}>
+          <TouchableOpacity
+            style={[s.btn, loading && s.btnDisabled]}
+            onPress={search}
+            disabled={loading}
+            activeOpacity={0.8}
+          >
+            {loading ? (
+              <ActivityIndicator color="#000" />
+            ) : (
+              <Text style={s.btnText}>Search</Text>
             )}
-          />
-        </>
-      )}
+          </TouchableOpacity>
 
-      {/* Transactions */}
-      {txns.length > 0 && (
-        <>
-          <Text style={s.section}>Recent Transactions</Text>
-          <FlatList
-            data={txns}
-            keyExtractor={(t) => t.sig}
-            scrollEnabled={false}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={s.row}
-                onPress={() =>
-                  Linking.openURL(`https://solscan.io/tx/${item.sig}`)
-                }
-                activeOpacity={0.7}
-              >
-                <View>
-                  <Text style={s.mint}>{short(item.sig, 8)}</Text>
-                  <Text style={s.time}>
-                    {item.time ? timeAgo(item.time) : "pending"}
-                  </Text>
+          <TouchableOpacity
+            style={s.btnGhost}
+            onPress={tryExample}
+            activeOpacity={0.7}
+          >
+            <Text style={s.btnGhostText}>Demo</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Balance Card */}
+        {balance !== null && (
+          <View style={s.card}>
+            <Text style={s.label}>SOL Balance</Text>
+            <View style={s.balanceRow}>
+              <Text style={s.balance}>{balance.toFixed(4)}</Text>
+              <Text style={s.sol}>SOL</Text>
+            </View>
+            <Text style={s.addr}>{short(address.trim(), 6)}</Text>
+          </View>
+        )}
+
+        {/* Tokens */}
+        {tokens.length > 0 && (
+          <>
+            <Text style={s.section}>Tokens ({tokens.length})</Text>
+            <FlatList
+              data={tokens}
+              keyExtractor={(t) => t.mint}
+              scrollEnabled={false}
+              renderItem={({ item }) => (
+                <View style={s.row}>
+                  <Text style={s.mint}>{short(item.mint, 6)}</Text>
+                  <Text style={s.amount}>{item.amount}</Text>
                 </View>
-                <Text
-                  style={[
-                    s.statusIcon,
-                    { color: item.ok ? "#14F195" : "#EF4444" },
-                  ]}
-                >
-                  {item.ok ? "+" : "-"}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
-        </>
-      )}
+              )}
+            />
+          </>
+        )}
 
-      <View style={{ height: 80 }} />
-    </ScrollView>
+        {/* Transactions */}
+        {txns.length > 0 && (
+          <>
+            <Text style={s.section}>Recent Transactions</Text>
+            <FlatList
+              data={txns}
+              keyExtractor={(t) => t.sig}
+              scrollEnabled={false}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={s.row}
+                  onPress={() =>
+                    Linking.openURL(`https://solscan.io/tx/${item.sig}`)
+                  }
+                  activeOpacity={0.7}
+                >
+                  <View>
+                    <Text style={s.mint}>{short(item.sig, 8)}</Text>
+                    <Text style={s.time}>
+                      {item.time ? timeAgo(item.time) : "pending"}
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      s.statusIcon,
+                      { color: item.ok ? "#14F195" : "#EF4444" },
+                    ]}
+                  >
+                    {item.ok ? "+" : "-"}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            />
+          </>
+        )}
+
+        <View style={{ height: 80 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: "#0D0D12",
+  },
   scroll: {
     flex: 1,
     paddingHorizontal: 24,
