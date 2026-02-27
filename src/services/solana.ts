@@ -1,5 +1,7 @@
+import { useWalletStore } from "@/stores/wallet-store";
+const isDevnet = useWalletStore((s) => s.isDevnet);
+const RPC = isDevnet ? "https://api.devnet.solana.com" : "https://api.mainnet-beta.solana.com";
 
-const RPC = "https://api.mainnet-beta.solana.com";
 
 const rpc = async (method: string, params: any[]) => {
     const res = await fetch(RPC, {
